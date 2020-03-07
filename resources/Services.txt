@@ -1,0 +1,3 @@
+Entire Business logic of application in services
+They don't share any data between different requests.
+They don't hold any in any data from a given request to be accesses from the next one
