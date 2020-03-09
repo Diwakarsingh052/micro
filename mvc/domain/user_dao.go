@@ -1,8 +1,9 @@
 package domain
 
 import (
-	"errors"
+	"diwakarsingh052/micro/mvc/utils"
 	"fmt"
+	"net/http"
 )
 
 var (
@@ -16,23 +17,16 @@ var (
 	}
 )
 
-func GetUser(userId int64) (*User, error) {
-	/*
-		user := person[userId]
+func GetUser(userId int64) (*User, *utils.ApplicationError) {
 
-		if user == nil { // if no user found with particular id
-		return nil, errors.New(fmt.Sprintf("user %v not found", userId))
-		}
-		//We asked *User in argument and
-		// that's the reason we can return nil above.
-		// instead of any User type value
-
-		return user, nil
-	*/
 
 	if user := person[userId]; user != nil {
 		return user, nil
 	}
-	return nil, errors.New(fmt.Sprintf("user %v not found", userId))
+	return nil, &utils.ApplicationError{
+		Message:    fmt.Sprintf("User %v was not found",userId),
+		StatusCode: http.StatusNotFound,
+		Code:       "Not Found",
+	}
 
 }
