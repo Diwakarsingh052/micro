@@ -5,15 +5,15 @@ import (
 	"diwakarsingh052/micro/mvc/utils"
 )
 
-func GetUser(userId int64) (*domain.User, *utils.ApplicationError) {
+type userService struct {
 
-	// service will get data from domain
+}
+var UserService userService
 
-	return domain.GetUser(userId)
+func (u *userService) GetUser(userId int64) (*domain.User, *utils.ApplicationError) {
 
-	// above statement will get replaced by return values of user_services.go
+	return domain.UserDao.GetUser(userId)
 
-	//After the response we send it back to controller and it is
-	//incharge to display the info see the mvc chart (refer)
+
 
 }

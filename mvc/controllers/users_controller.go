@@ -28,7 +28,7 @@ func GetUser(resp http.ResponseWriter, req *http.Request) {
 	}
 
 	//We need to send this user_id to service in order to get data
-	user, apiErr := services.GetUser(userId)
+	user, apiErr := services.UserService.GetUser(userId)
 	if apiErr != nil {
 		jsonValue, _ := json.Marshal(apiErr)
 		resp.WriteHeader(apiErr.StatusCode)

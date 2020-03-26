@@ -4,3 +4,6 @@ While testing we are actually testing return statements.
 
 We don't check for multiple return statements in one test function.
 You should create new function to test new return statement.
+
+In unit test we don't call external services like databases,file system ,i/o
+etc

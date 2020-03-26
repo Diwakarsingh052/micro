@@ -17,14 +17,26 @@ var (
 	}
 )
 
-func GetUser(userId int64) (*User, *utils.ApplicationError) {
+type userDaoInterface interface {
+	GetUser(int64) (*User,*utils.ApplicationError)
+}
 
+func init() {
+	UserDao= &userDao{}
+}
+
+type userDao struct{}
+
+// earlier var UserDao userDao
+var UserDao userDaoInterface
+
+func (u *userDao) GetUser(userId int64) (*User, *utils.ApplicationError) {
 
 	if user := person[userId]; user != nil {
 		return user, nil
 	}
 	return nil, &utils.ApplicationError{
-		Message:    fmt.Sprintf("User %v was not found",userId),
+		Message:    fmt.Sprintf("User %v was not found", userId),
 		StatusCode: http.StatusNotFound,
 		Code:       "Not Found",
 	}
