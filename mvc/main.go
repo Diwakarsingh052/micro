@@ -12,4 +12,5 @@ func main() {
 
 }
 
-// curl localhost:8080/users?user_id=1230
+// curl localhost:8080/users/123
+// we changed here how we run our app. check previous commit how it works.

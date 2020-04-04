@@ -3,39 +3,32 @@ package controllers
 import (
 	"diwakarsingh052/micro/mvc/services"
 	"diwakarsingh052/micro/mvc/utils"
-	"encoding/json"
+	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
 )
 
 // Controller is in charge to get the user.
-func GetUser(resp http.ResponseWriter, req *http.Request) {
+func GetUser(c *gin.Context) {
 
-	userId, err := strconv.ParseInt(req.URL.Query().Get("user_id"), 10, 64)
+	userId, err := strconv.ParseInt(c.Param("user_id"), 10, 64)
 	if err != nil {
 		apiErr := &utils.ApplicationError{
 			Message:    "User Id must be a number",
 			StatusCode: http.StatusBadRequest,
 			Code:       "bad_request",
 		}
-
-		jsonValue, _ := json.Marshal(apiErr)
-
-		resp.WriteHeader(apiErr.StatusCode)
-		resp.Write(jsonValue)
-
+		c.JSON(http.StatusBadRequest,apiErr)
 		return
 	}
 
 	//We need to send this user_id to service in order to get data
 	user, apiErr := services.UserService.GetUser(userId)
 	if apiErr != nil {
-		jsonValue, _ := json.Marshal(apiErr)
-		resp.WriteHeader(apiErr.StatusCode)
-		resp.Write(jsonValue)
+		c.JSON(apiErr.StatusCode,apiErr)
 		return
 	}
-	jsonValue, _ := json.Marshal(user)
-	resp.Write(jsonValue)
+	c.JSON(http.StatusOK,user)
+
 
 }
